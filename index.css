@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    color: rgb(255, 255, 255);
+    margin: 20px;
+    background: rgb(36, 64, 73);
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+#recipeForm {
+    max-width: 300px;
+    margin: 20px auto;
+
+}
+
+#recipeList {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.recipe {
+    border: 3px solid #000000;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    background:white;
+    color:black;
+}
+
+button {
+    cursor: pointer;
+}
+
+#searchBar {
+    max-width: 300px;
+    margin: 20px auto;
+    align-content: center;
+}
+#search {
+    border: 3px solid black;
+}
+
+.inputBox {
+    border: 3px solid black;
+    height:100px; 
+    width: 300px;
+}
