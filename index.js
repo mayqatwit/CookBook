@@ -1,65 +1,61 @@
+// Check if the File System API is supported
+if ('showDirectoryPicker' in window) {
+    document.getElementById('recipeList').innerHTML = '<p>File System API is supported.</p>';
+} else {
+    document.getElementById('recipeList').innerHTML = '<p>File System API is not supported. Please use a different browser.</p>';
+}
+
 // Function to add a recipe
-function addRecipe() {
-    // Get values from the form
+async function addRecipe() {
     const recipeName = document.getElementById('recipeName').value;
     const ingredients = document.getElementById('ingredients').value;
     const directions = document.getElementById('directions').value;
 
-    // Check if localStorage has recipes
-    const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+    const recipes = await readRecipesFile();
 
-    // Add the new recipe to the recipes array
     recipes.push({
         name: recipeName,
         ingredients: ingredients,
         directions: directions
     });
 
-    // Save the updated recipes array to localStorage
-    localStorage.setItem('recipes', JSON.stringify(recipes));
+    await writeRecipesFile(recipes);
 
-    // Clear the form
     document.getElementById('addRecipeForm').reset();
 
-    // Update the displayed recipes
     displayRecipes();
 }
 
 // Function to display recipes
-function displayRecipes() {
+async function displayRecipes() {
     const recipesContainer = document.getElementById('recipes');
     recipesContainer.innerHTML = '';
 
-    // Get recipes from localStorage
-    const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+    const recipes = await readRecipesFile();
 
-    // Display each recipe
     recipes.forEach((recipe, index) => {
         const recipeDiv = document.createElement('div');
         recipeDiv.classList.add('recipe');
 
         recipeDiv.innerHTML = `
-            <h3>${recipe.name}</h3>
-            <p><strong>Ingredients:</strong><br>${recipe.ingredients}</p>
-            <p><strong>Directions:</strong><br>${recipe.directions}</p>
-            <button onclick="deleteRecipe(${index})">Delete Recipe</button>
-        `;
+                    <h3>${recipe.name}</h3>
+                    <p><strong>Ingredients:</strong><br>${recipe.ingredients}</p>
+                    <p><strong>Directions:</strong><br>${recipe.directions}</p>
+                    <button onclick="deleteRecipe(${index})">Delete Recipe</button>
+                `;
 
         recipesContainer.appendChild(recipeDiv);
     });
 }
 
 // Function to delete a recipe
-function deleteRecipe(index) {
-    const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+async function deleteRecipe(index) {
+    const recipes = await readRecipesFile();
 
-    // Remove the recipe at the specified index
     recipes.splice(index, 1);
 
-    // Save the updated recipes array to localStorage
-    localStorage.setItem('recipes', JSON.stringify(recipes));
+    await writeRecipesFile(recipes);
 
-    // Update the displayed recipes
     displayRecipes();
 }
 
@@ -70,8 +66,8 @@ function searchRecipes() {
 
     const filteredRecipes = recipes.filter(recipe => {
         return recipe.name.toLowerCase().includes(searchTerm) ||
-               recipe.ingredients.toLowerCase().includes(searchTerm) ||
-               recipe.directions.toLowerCase().includes(searchTerm);
+            recipe.ingredients.toLowerCase().includes(searchTerm) ||
+            recipe.directions.toLowerCase().includes(searchTerm);
     });
 
     displayFilteredRecipes(filteredRecipes);
@@ -82,20 +78,46 @@ function displayFilteredRecipes(filteredRecipes) {
     const recipesContainer = document.getElementById('recipes');
     recipesContainer.innerHTML = '';
 
-    // Display each filtered recipe
     filteredRecipes.forEach((recipe, index) => {
         const recipeDiv = document.createElement('div');
         recipeDiv.classList.add('recipe');
 
         recipeDiv.innerHTML = `
-            <h3>${recipe.name}</h3>
-            <p><strong>Ingredients:</strong><br>${recipe.ingredients}</p>
-            <p><strong>Directions:</strong><br>${recipe.directions}</p>
-            <button onclick="deleteRecipe(${index})">Delete Recipe</button>
-        `;
+                    <h3>${recipe.name}</h3>
+                    <p><strong>Ingredients:</strong><br>${recipe.ingredients}</p>
+                    <p><strong>Directions:</strong><br>${recipe.directions}</p>
+                    <button onclick="deleteRecipe(${index})">Delete Recipe</button>
+                `;
 
         recipesContainer.appendChild(recipeDiv);
     });
+}
+
+// Read recipes from the file
+async function readRecipesFile() {
+    const recipesFileHandle = await getFileHandle();
+    const file = await recipesFileHandle.getFile();
+    const contents = await file.text();
+
+    try {
+        return JSON.parse(contents) || [];
+    } catch (error) {
+        return [];
+    }
+}
+
+// Write recipes to the file
+async function writeRecipesFile(recipes) {
+    const recipesFileHandle = await getFileHandle();
+    const writable = await recipesFileHandle.createWritable();
+    await writable.write(JSON.stringify(recipes, null, 2));
+    await writable.close();
+}
+
+// Get file handle for recipes file
+async function getFileHandle() {
+    const dirHandle = await window.showDirectoryPicker();
+    return await dirHandle.getFileHandle('recipes.txt', { create: true });
 }
 
 // Display recipes when the page loads
