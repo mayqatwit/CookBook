@@ -2,13 +2,26 @@ body {
     font-family: Georgia , sans-serif;
     font-variant: no-common-ligatures slashed-zero;
     color: rgb(255, 255, 255);
-    margin: 20px;
+    margin: 20px 0 0 0;
     background: rgb(36, 64, 73);
 }
+
 
 h1,
 h2 {
     text-align: center;
+}
+
+.credit {
+    padding-top: 5px;
+    background: black;
+    padding-bottom: 5px;
+    text-align: center;
+    color: #5e5e5e;
+    font-size: 16px;
+    position: fixed; 
+    bottom: 0px;
+    width:100%;
 }
 
 #recipeForm {
