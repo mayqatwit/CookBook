@@ -1,11 +1,13 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: Georgia , sans-serif;
+    font-variant: no-common-ligatures slashed-zero;
     color: rgb(255, 255, 255);
     margin: 20px;
     background: rgb(36, 64, 73);
 }
 
-h1, h2 {
+h1,
+h2 {
     text-align: center;
 }
 
@@ -25,8 +27,8 @@ h1, h2 {
     margin: 10px 0;
     padding: 10px;
     border-radius: 10px;
-    background:white;
-    color:black;
+    background: white;
+    color: black;
 }
 
 button {
@@ -38,12 +40,13 @@ button {
     margin: 20px auto;
     align-content: center;
 }
+
 #search {
     border: 3px solid black;
 }
 
 .inputBox {
     border: 3px solid black;
-    height:100px; 
+    height: 100px;
     width: 300px;
 }

@@ -1,12 +1,11 @@
-// Function to add a recipe
 function addRecipe() {
     // Get values from the form
-    const recipeName = document.getElementById('recipeName').value;
-    const ingredients = document.getElementById('ingredients').value;
-    const directions = document.getElementById('directions').value;
+    let recipeName = document.getElementById('recipeName').value;
+    let ingredients = document.getElementById('ingredients').value;
+    let directions = document.getElementById('directions').value;
 
-    // Check if localStorage has recipes
-    const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+    // Get recipes from localStorage or an empty array if empty
+    let recipes = JSON.parse(localStorage.getItem('recipes')) || [];
 
     // Add the new recipe to the recipes array
     recipes.push({
@@ -25,17 +24,16 @@ function addRecipe() {
     displayRecipes();
 }
 
-// Function to display recipes
 function displayRecipes() {
-    const recipesContainer = document.getElementById('recipes');
+    let recipesContainer = document.getElementById('recipes');
     recipesContainer.innerHTML = '';
 
-    // Get recipes from localStorage
-    const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+    // Get recipes from localStorage or an empty array if empty
+    let recipes = JSON.parse(localStorage.getItem('recipes')) || [];
 
     // Display each recipe
     recipes.forEach((recipe, index) => {
-        const recipeDiv = document.createElement('div');
+        let recipeDiv = document.createElement('div');
         recipeDiv.classList.add('recipe');
 
         recipeDiv.innerHTML = `
@@ -49,9 +47,8 @@ function displayRecipes() {
     });
 }
 
-// Function to delete a recipe
 function deleteRecipe(index) {
-    const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+    let recipes = JSON.parse(localStorage.getItem('recipes')) || [];
 
     // Remove the recipe at the specified index
     recipes.splice(index, 1);
@@ -63,28 +60,27 @@ function deleteRecipe(index) {
     displayRecipes();
 }
 
-// Function to search recipes
 function searchRecipes() {
-    const searchTerm = document.getElementById('search').value.toLowerCase();
-    const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+    let searchTerm = document.getElementById('search').value.toLowerCase();
+    let recipes = JSON.parse(localStorage.getItem('recipes')) || [];
 
-    const filteredRecipes = recipes.filter(recipe => {
-        return recipe.name.toLowerCase().includes(searchTerm) ||
-            recipe.ingredients.toLowerCase().includes(searchTerm) ||
-            recipe.directions.toLowerCase().includes(searchTerm);
+    let filteredRecipes = recipes.filter(recipe => {
+        return recipe.name.toLowerCase().includes(searchTerm) 
+        // ||
+        //     recipe.ingredients.toLowerCase().includes(searchTerm) ||
+        //     recipe.directions.toLowerCase().includes(searchTerm);
     });
 
     displayFilteredRecipes(filteredRecipes);
 }
 
-// Function to display filtered recipes
 function displayFilteredRecipes(filteredRecipes) {
-    const recipesContainer = document.getElementById('recipes');
+    let recipesContainer = document.getElementById('recipes');
     recipesContainer.innerHTML = '';
 
     // Display each filtered recipe
     filteredRecipes.forEach((recipe, index) => {
-        const recipeDiv = document.createElement('div');
+        let recipeDiv = document.createElement('div');
         recipeDiv.classList.add('recipe');
 
         recipeDiv.innerHTML = `
