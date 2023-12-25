@@ -37,9 +37,9 @@ function displayRecipes() {
         recipeDiv.classList.add('recipe');
 
         recipeDiv.innerHTML = `
-            <h2>${recipe.name}</h2>
-            <p><strong>Ingredients:</strong><br><pre>${recipe.ingredients}</pre></p>
-            <p><strong>Directions:</strong><br><pre>${recipe.directions}</pre></p>
+            <h1>${recipe.name}</h1>
+            <p><strong>Ingredients:</strong><br>${recipe.ingredients}</p>
+            <p><strong>Directions:</strong><br>${recipe.directions}</p>
             <button onclick="deleteRecipe(${index})">Delete Recipe</button>
         `;
 
@@ -85,8 +85,8 @@ function displayFilteredRecipes(filteredRecipes) {
 
         recipeDiv.innerHTML = `
         <h2>${recipe.name}</h2>
-        <p><strong>Ingredients:</strong><br><pre>${recipe.ingredients}</pre></p>
-        <p><strong>Directions:</strong><br><pre>${recipe.directions}</pre></p>
+        <p><strong>Ingredients:</strong><br>${recipe.ingredients}</p>
+        <p><strong>Directions:</strong><br>${recipe.directions}</p>
         <button onclick="deleteRecipe(${index})">Delete Recipe</button>
         `;
 
